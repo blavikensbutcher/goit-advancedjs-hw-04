@@ -1,41 +1,27 @@
-export function renderGallery(container, images) {
-  const markup = images
-    .map(
-      img => `
-      <a class="gallery__item" href="${img.largeImageURL}">
-        <div class="photo-card">
-          <img src="${img.webformatURL}" alt="${img.tags}" loading="lazy" />
-          <div class="info">
-            <p><b>Likes:</b> ${img.likes}</p>
-            <p><b>Views:</b> ${img.views}</p>
-            <p><b>Comments:</b> ${img.comments}</p>
-            <p><b>Downloads:</b> ${img.downloads}</p>
-          </div>
+function createCardMarkup(img) {
+  return `
+    <a class="gallery__item" href="${img.largeImageURL}">
+      <div class="photo-card">
+        <img src="${img.webformatURL}" alt="${img.tags}" loading="lazy" />
+        <div class="info">
+          <p><b>Likes:</b> ${img.likes}</p>
+          <p><b>Views:</b> ${img.views}</p>
+          <p><b>Comments:</b> ${img.comments}</p>
+          <p><b>Downloads:</b> ${img.downloads}</p>
         </div>
-      </a>`
-    )
-    .join('');
-  container.innerHTML = markup;
+      </div>
+    </a>`;
+}
+
+export function renderGallery(container, images) {
+  container.innerHTML = images.map(createCardMarkup).join('');
 }
 
 export function insertGalleryItems(container, images) {
-  const markup = images
-    .map(
-      img => `
-      <a class="gallery__item" href="${img.largeImageURL}">
-        <div class="photo-card">
-          <img src="${img.webformatURL}" alt="${img.tags}" loading="lazy" />
-          <div class="info">
-            <p><b>Likes:</b> ${img.likes}</p>
-            <p><b>Views:</b> ${img.views}</p>
-            <p><b>Comments:</b> ${img.comments}</p>
-            <p><b>Downloads:</b> ${img.downloads}</p>
-          </div>
-        </div>
-      </a>`
-    )
-    .join('');
-  container.insertAdjacentHTML('beforeend', markup);
+  container.insertAdjacentHTML(
+    'beforeend',
+    images.map(createCardMarkup).join('')
+  );
 }
 
 export function clearGallery(container) {
